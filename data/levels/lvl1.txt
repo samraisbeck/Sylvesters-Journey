@@ -1,0 +1,63 @@
+platform -120 500 120 30
+wall -120 -200 0 0
+wall -120 -1000 0 0
+coin -120 -240 30 30
+coin -80 -240 30 30
+coin -40 -240 30 30
+coin -120 -280 30 30
+coin -80 -280 30 30
+coin -40 -280 30 30
+
+platform 0 500 200 30
+superjump 30 450 40 40
+block 25 470 20 20
+itemBlock 50 350 50 50
+enemy 150 478 1 5 5
+
+platform 400 550 200 30
+coin 560 480 30 30 
+
+platform 900 425 200 30
+enemy 910 403 1 5 5
+block 930 390 20 20
+powerBlock 1000 275 50 50
+arrow 1100 300 20 0
+
+platform 2100 200 200 30
+powerBlock 2200 50 50 50
+enemy 2200 178 1 5 5
+
+platform 2500 200 700 30
+coin 2610 150 30 30
+enemy 2700 155 1 10 10
+itemBlock 3000 50 50 50
+
+platform 3500 325 1000 30
+block 3750 300 20 20
+block 4000 300 20 20
+block 4250 300 20 20
+arrow 4400 0 90 0 
+
+platform 4600 -400 300 30
+itemBlock 4700 -550 50 50
+enemy 4700 -445 1 10 15
+
+platform 5100 -500 200 30
+
+platform 5300 -530 100 30
+
+platform 5400 -560 100 30
+
+platform 5500 -590 100 30
+
+platform 5600 -620 100 30
+
+platform 5700 -650 1000 30
+boss 6500 -715 2 15 30
+
+platform 6700 -650 150 30
+wall 6700 -1350 0 0
+wall 6700 -2035 0 0
+
+platform 6840 -650 200 30
+door 6840 -775 0 0

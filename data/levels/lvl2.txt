@@ -1,0 +1,109 @@
+platform 270 600 120 30
+wall 270 -100 0 0
+wall 270 -800 0 0
+
+platform 390 600 500 30
+block 500 550 20 20
+
+platform 1000 500 400 30
+itemBlock 1100 350 50 50
+powerBlock 1300 350 50 50
+block 1200 450 20 20 
+
+platform 1400 470 150 30
+
+platform 1550 440 150 30
+enemy 1600 420 2 5 5
+
+platform 1700 410 150 30
+enemy 1775 390 2 5 5
+
+platform 1850 380 150 30
+enemy 1910 360 1 5 5
+
+platform 2000 350 150 30
+enemy 2075 330 3 5 5
+
+platform 2200 250 150 30
+
+platform 2400 150 150 30
+
+platform 2600 50 150 30
+
+platform 2800 -50 150 30
+
+Here's the tunnel downwards
+platform 3000 -150 150 30
+platform 3120 -150 30 1000
+arrow 3150 -150 270 0
+coin 3090 500 30 30
+coin 3090 550 30 30
+coin 3090 600 30 30
+
+platform 3220 -150 150 30
+platform 3220 -150 30 1000
+
+If you don't go down the tunnel:
+platform 3700 -550 600 30
+coin 3800 -600 30 30
+coin 4170 -600 30 30
+itemBlock 3900 -700 50 50
+itemBlock 4100 -700 50 50
+
+platform 4350 -1150 300 30
+coin 4400 -1200 30 30
+coin 4450 -1200 30 30
+coin 4500 -1200 30 30
+coin 4550 -1200 30 30
+
+If you do go down the tunnel:
+platformLowest 3100 1000 1000 30
+enemy 3200 955 4 15 20
+enemy 3500 980 3 5 5
+enemy 3700 980 4 5 5
+
+platform 4250 900 500 30
+heart 4450 750 30 30
+block 4300 850 20 20
+block 4680 850 20 20
+
+platform 5000 800 75 30
+
+platform 5400 700 75 30
+arrow 5500 650 25 0
+
+platform 6000 600 75 30
+arrow 6100 550 25 0
+
+platform 6700 500 75 30
+
+platform 6900 350 400 30
+sword 7100 270 25 65
+platform 7270 350 30 250
+
+platform 7450 350 200 30
+platform 7450 350 30 250
+platform 7620 -20 30 400
+
+platform 7000 950 500 30
+heart 7400 900 20 20
+
+platform 7600 1100 1000 30
+boss 7800 1035 3 15 60
+
+platform 8600 1100 150 30
+wall 8600 400 0 0
+wall 8600 -300 0 0
+
+platform 8750 1100 200 30
+door 8750 975 0 0
+
+
+
+
+
+
+
+
+
+

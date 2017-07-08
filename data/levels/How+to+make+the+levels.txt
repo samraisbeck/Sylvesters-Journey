@@ -1,0 +1,25 @@
+The levels are created using file i/o with text documents.
+The numbers for the first three sets are for, in order:
+
+
+The numbers indicate:
+
+x-coord, y-coord, width, height
+
+For the fourth set, this is data for the enemies. The numbers indicate:
+
+x-coord, y-coord, speed, damage potential, health
+
+*Note: Try to put all objects (platforms, enemies, etc) in order based on their x-coordinate.
+That is, starting with the platform right under the spawn of the character, and moving right.
+Damage potential indicates the enemy type. So far, a damage of 5 is the small enemy, damage of 10 is the upright enemy.
+
+Power/Item blocks go 150 higher than the platform.
+
+Small black enemy should be 20 higher than the platform it is on (so 20 less y-units).
+Taller green enemy should be 45 higher than the platform it is on (so 45 less y-units).
+Boss enemies should be 70 higher than the platform it is on (so 70 less y-units).
+Walls are 700 tall, and 120 wide.
+When stacking walls on top of each other, the other one should be 700-15 higher than the other. So, the y of the first one, subtract (700-15) for the y of the second one.
+
+

@@ -1,0 +1,125 @@
+wall -10000 -10000 0 0
+wall -10000 -10000 0 0
+
+start platform:
+platform 200 500 500 30
+block 300 450 20 20
+block 600 450 20 20
+
+left:
+platform -200 400 200 30
+arrow -370 350 180 0
+
+platform -1400 400 200 30
+enemy -1300 380 1 5 10
+coin -1300 370 30 30
+
+platform -2000 600 400 30
+enemy -1850 555 2 10 15
+powerBlock -1900 450 50 50 
+
+platform -1500 800 75 30
+
+platformLowest -1900 1000 200 30
+block -1850 900 20 20
+block -1850 950 20 20
+block -1800 900 20 20
+heart -1750 900 30 30
+arrow -1950 1050 30 0
+
+right:
+platform 900 400 200 30
+arrow 1120 350 0 0
+
+platform 2100 400 400 30
+coin 2200 350 30 30
+sword 2300 300 25 65
+
+platform 2700 600 1000 30 
+enemy 2800 555 6 15 25
+enemy 3100 555 4 10 20
+enemy 3200 580 3 3 10
+
+platform 3800 800 75 30
+
+platform 3400 1000 500 30
+block 3500 950 20 20
+heart 3550 950 30 30
+block 3600 950 20 20
+block 3650 950 20 20
+arrow 3450 1050 30 0
+
+upLeft:
+platform 250 300 75 30
+
+platform 150 100 75 30
+
+platform 250 -100 75 30
+
+platform 50 -300 75 30
+coin 60 -350 30 30
+
+platform -150 -500 75 30
+heart -140 -550 30 30
+
+platform -350 -700 75 30
+
+platform -900 -800 400 30
+enemy -800 -845 6 10 15
+arrow -1070 -850 160 0
+
+platform -2800 -900 400 30
+heart -2700 -950 30 30
+sword -2500 -1000 25 65
+coin -2600 -940 30 30
+
+platform -2950 -1050 75 30
+coin -2940 -1100 30 30
+
+platform -3100 -1200 75 30
+
+platform -4500 -1350 1300 30
+boss -4300 -1415 4 15 75
+heart -4400 -1500 30 30
+heart -3700 -1500 30 30
+
+platform -4650 -1350 150 30
+wall -4650 -2050 0 0
+wall -4650 -2750 0 0
+
+platform -4850 -1350 200 30
+door -4780 -1475 0 0
+
+upRight:
+platform 575 300 75 30
+
+platform 675 100 75 30
+
+platform 575 -100 75 30
+
+platform 775 -300 75 30
+heart 800 -350 30 30
+
+platform 975 -500 75 30
+coin 980 -540 30 30
+
+platform 1175 -700 75 30
+
+platform 1300 -800 300 30
+powerBlock 1400 -950 50 50
+arrow 1650 -850 20 0
+
+platform 2500 -950 500 30
+enemy 2600 -970 7 3 15
+
+platform 3200 -1150 75 30
+coin 3210 -1200 30 30
+
+platform 3450 -1350 500 30
+enemy 3500 -1370 2 5 5 
+block 3500 -1400 20 20
+heart 3550 -1400 30 30
+block 3600 -1400 20 20
+block 3650 -1400 20 20
+arrow 3930 -1400 200 0
+
