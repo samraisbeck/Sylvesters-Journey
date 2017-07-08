@@ -316,6 +316,9 @@ class Game(object):
                     self.enemies.append(Boss(IMG_PATH_BOSS1, x, y, s, d, h))
                     self.otherMovableObjects.append(Boss(IMG_PATH_BOSS1, x, y, s, d, h))
                     self.bossNumber += 1
+                    if self.bossNumber == 2:
+                        self.otherMovableObjects[-1].healthPicX = WIDTH/10*7.3
+                        self.otherMovableObjects[-1].healthBarX = WIDTH/10*8.3
                     # Sets the max speed of the boss to increase, the min speed
                     # to decrease, and the speed up interval to decrease with each level
                     self.otherMovableObjects[len(self.otherMovableObjects)-1].maxSpeed += self.level*2
@@ -582,6 +585,7 @@ class Game(object):
                     self.incrementScore()
                     self.sword.canHit = False
             if isinstance(obj, Enemy) and obj.health <= 0 or isinstance(obj, Boss) and obj.health <= 0:
+                obj.visible = False
                 self.otherMovableObjects.remove(obj)
                 self.incrementScore()
                 if isinstance(obj, Boss):

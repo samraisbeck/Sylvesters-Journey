@@ -20,7 +20,7 @@ class MovableObject(object):
 
     def checkVisible(self):
         """ Checks to see if object is on the screen """
-        if self.x <= WIDTH or self.x+self.w >= 0 or self.y <= HEIGHT or \
+        if self.x <= WIDTH and self.x+self.w >= 0 and self.y <= HEIGHT and \
            self.y+self.h >= 0:
             self.visible = True
         else:

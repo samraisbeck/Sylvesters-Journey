@@ -23,8 +23,10 @@ class Enemy(MovableObject):
         self.platFound = False
         self.damage = damage   # Damage potential
         self.health = health
+        self.maxHealth = health
         self.direction = "right"
         self.bounds = 15       # The enemy's border on the platform
+        self.inRange = False
 
     def changeDirection(self):
         self.speed = -self.speed
@@ -53,10 +55,20 @@ class Enemy(MovableObject):
         if self.visible:
             surface.blit(self.images[self.imageIndex], (self.x, self.y))
 
+    def drawHealth(self, surface):
+        if self.inRange:
+            pygame.draw.rect(surface, BLACK, (self.x-1-((48-self.w)/2), self.y-16, 49, 9), 1)
+            pygame.draw.rect(surface, RED, (self.x-((47-self.w)/2), self.y-15, (float(self.health)/self.maxHealth)*47, 7))
+
     def update(self, surface, characterObj):
         """ Enemy update method to be used in the game class """
+        if not self.inRange and abs(characterObj.x - self.x) <= 0.35*WIDTH:
+            self.inRange = True
+        elif self.inRange and abs(characterObj.x - self.x) > 0.35*WIDTH:
+            self.inRange = False
         self.checkVisible()
         self.draw(surface)
+        self.drawHealth(surface)
         # Subtract the character's speed and add the enemy's own speed
         self.x -= characterObj.speedX
         self.x += self.speed
@@ -71,6 +83,10 @@ class Boss(Enemy):
         self.bounds = 40
         self.maxSpeed = 10
         self.minSpeed = 1
+        self.hasBeenVisible = False
+        self.healthPic = pygame.transform.scale(self.imageRight, (int(self.w*0.6),int(self.h*0.6)))
+        self.healthPicX = WIDTH/10*0.6
+        self.healthBarX = WIDTH/10*1.6
 
     def randomSpeed(self):
         """ Generate a random speed every speed interval """
@@ -81,16 +97,26 @@ class Boss(Enemy):
                 self.speed = -randint(self.minSpeed, self.maxSpeed)
             self.lastSpeedUp = pygame.time.get_ticks()
 
+    def drawHealth(self, surface):
+        if self.hasBeenVisible:
+            pygame.draw.rect(surface,BLACK,(self.healthBarX,HEIGHT/5, 130, 20),2)
+            pygame.draw.rect(surface,BLACK,(self.healthBarX,HEIGHT/5, (float(self.health)/self.maxHealth)*130, 20))
+            pygame.draw.rect(surface,RED,(self.healthPicX-5,(HEIGHT/5-(0.5*(int(self.h*0.6)-20)))-5, (self.healthBarX-self.healthPicX+140),int(self.h*0.6)+10),2)
+            surface.blit(self.healthPic,(self.healthPicX, (HEIGHT/5-(0.5*(int(self.h*0.6)-20)))))
+
+    def draw(self, surface):
+        """ Draws the enemy with correct picture """
+        if self.visible:
+            surface.blit(self.images[self.imageIndex], (self.x, self.y))
+            if not self.hasBeenVisible:
+                self.hasBeenVisible = True
+
     def update(self, surface, characterObj):
         """ Same as enemy update except for the random speed method """
         self.checkVisible()
         self.randomSpeed()
         self.draw(surface)
+        self.drawHealth(surface)
         self.x -= characterObj.speedX
         self.x += self.speed
         self.y -= characterObj.speedY
-        
-        
-
-        
-        
