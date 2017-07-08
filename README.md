@@ -9,3 +9,8 @@ game and the menus.
 
 Also make sure you have pygame by doing `pip install pygame`. This is for
 Python 2.7 as well.
+
+## Have fun!
+<div align="middle">
+<img width="50%" src="data/pictures/screenshot2.png"/>
+</div>
