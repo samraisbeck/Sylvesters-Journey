@@ -111,10 +111,17 @@ class Boss(Enemy):
             if not self.hasBeenVisible:
                 self.hasBeenVisible = True
 
+    def runFromSword(self, characterObj):
+        if (float(self.health)/self.maxHealth)*100 <= 50 and characterObj.sword.swinging and \
+           abs((self.x+self.w/2) - (characterObj.x+characterObj.w/2)) <= self.w*2 + characterObj.w/2\
+           and self.direction != characterObj.direction:
+            self.changeDirection()
+
     def update(self, surface, characterObj):
         """ Same as enemy update except for the random speed method """
         self.checkVisible()
         self.randomSpeed()
+        self.runFromSword(characterObj)
         self.draw(surface)
         self.drawHealth(surface)
         self.x -= characterObj.speedX

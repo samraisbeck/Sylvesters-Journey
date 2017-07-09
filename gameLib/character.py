@@ -7,6 +7,7 @@
 
 from localVariables import *
 import pygame
+from sword import Sword
 
 class Character(object):
     """ The character class """
@@ -83,7 +84,7 @@ class Character(object):
         # Level clear booleans
         self.inDoorway = False
         self.levelCleared = True
-
+        self.sword = None
         self.swordCount = 0
 
     def getRect(self):
@@ -98,7 +99,7 @@ class Character(object):
             surface.blit(self.lifeBarImage, (x_coord, y_coord))
 
     def counter(self):
-        """ Takes care of looping through images for animation """ 
+        """ Takes care of looping through images for animation """
         self.imageCounter += 1
         # The number in place of 4 controls how fast to loop through images
         if self.imageCounter >= 4:
@@ -144,7 +145,7 @@ class Character(object):
         else:
             if self.speedY <= self.maxSpeed:
                 self.speedY += self.gravity
-            
+
     def draw(self, surface):
         """ Draws the correct character images on the screen, and the
             invincibility bubble if needed """
@@ -152,7 +153,7 @@ class Character(object):
             if self.onPlat:
                 surface.blit(self.imagesRight[self.imageIndex], (self.x, self.y))
             else:
-                surface.blit(self.imgJumpR, (self.x, self.y)) 
+                surface.blit(self.imgJumpR, (self.x, self.y))
         elif self.direction == "left":
             if self.onPlat:
                 surface.blit(self.imagesLeft[self.imageIndex], (self.x, self.y))
@@ -171,7 +172,7 @@ class Character(object):
         self.onPlat = True
         self.canJump = True
         self.canGroundPound = False
-		
+
     def stopSideMotion(self):
         """ Player cannot move sideways """
         self.speedX = 0

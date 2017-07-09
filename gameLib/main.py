@@ -51,7 +51,7 @@ class Game(object):
         self.lowestPlatIndex = 0
 
         self.char = Character(speed=8)
-        self.sword = Sword(self.char.x+(self.char.w), self.char.y, (20, 70))
+        self.char.sword = Sword(self.char.x+(self.char.w), self.char.y, (20, 70))
         self.clock = pygame.time.Clock()
         self.FPS = 70
         self.HUD = pygame.Surface((WIDTH, HEIGHT/8), pygame.SRCALPHA, 32)
@@ -95,7 +95,7 @@ class Game(object):
         self.char.gravityBoosted = False
         self.char.superjump = False
         self.char.invincible = False
-        self.sword.visible = False
+        self.char.sword.visible = False
 
     def resetTextValues(self):
         """ Method to reset the changing text values """
@@ -369,8 +369,8 @@ class Game(object):
             obj.update(self.gameWindow, self.char)
         self.gameWindow.blit(self.HUD, ORIGIN)
         self.drawTimers()
-        if self.sword.visible:
-            self.sword.update(self.gameWindow, self.char, events)
+        if self.char.sword.visible:
+            self.char.sword.update(self.gameWindow, self.char, events)
         self.char.update(self.gameWindow, events)
         for text in self.staticTexts:
             font, coords = text
@@ -424,10 +424,10 @@ class Game(object):
             self.char.activatedInvincibility = pygame.time.get_ticks()
             self.char.invincibleCount -= 1
             self.changingTexts[3] = self.renderText(str(self.char.invincibleCount), COOL_FONT, (WIDTH/20*9.8, HEIGHT/8/2), BLACK, 20)
-        elif keys[pygame.K_3] and not self.sword.visible and self.char.swordCount > 0:
-            self.sword = Sword(self.char.x+(self.char.w), self.char.y, (20, 70))
+        elif keys[pygame.K_3] and not self.char.sword.visible and self.char.swordCount > 0:
+            self.char.sword = Sword(self.char.x+(self.char.w), self.char.y, (20, 70))
             self.char.swordCount -= 1
-            self.sword.visible = True
+            self.char.sword.visible = True
             self.changingTexts[4] = self.renderText(str(self.char.swordCount), COOL_FONT, (WIDTH/20*9.8, HEIGHT/8/3*2.2), BLACK, 20)
         self.constantEventChecks(keys)
 
@@ -551,7 +551,8 @@ class Game(object):
                     if obj.getRect().colliderect(self.char.getRect()) and \
                        self.char.getRect().bottom <= obj.y+19 and self.char.speedY > 0:
                         obj.health -= self.char.attackPoints
-                        if isinstance(obj, Boss):
+                        temp = randint(1,20)
+                        if (isinstance(obj, Boss) and temp <= 9) or (isinstance(obj, Enemy) and temp <= 4):
                             obj.changeDirection()
                         self.char.hasAttacked = True
                         self.char.hasAttackedTime = pygame.time.get_ticks()
@@ -577,16 +578,25 @@ class Game(object):
             elif isinstance(obj, Door):
                 obj.opened = False
                 self.char.inDoorway = False
-            if self.sword.visible and obj.getRect().colliderect(self.sword.rect) and \
-               self.sword.swinging and self.sword.canHit:
+            if self.char.sword.visible and obj.getRect().colliderect(self.char.sword.rect) and \
+               self.char.sword.swinging and self.char.sword.canHit:
                 if isinstance(obj, Enemy) or isinstance(obj, Boss):
                     obj.health -= 10
-                    obj.changeDirection()
+                    if obj.direction != self.char.direction:
+                        obj.changeDirection()
                     self.incrementScore()
-                    self.sword.canHit = False
+                    self.char.sword.canHit = False
             if isinstance(obj, Enemy) and obj.health <= 0 or isinstance(obj, Boss) and obj.health <= 0:
                 obj.visible = False
                 self.otherMovableObjects.remove(obj)
+                temp2 = randint(1,20)
+                if (float(self.char.health)/self.char.maxHealth)*100 <= 50 and temp2 <= 6:
+                    self.otherMovableObjects.append(Health(self.char.x-60, self.char.y-20, (30,30)))
+                    self.otherMovableObjects.append(Health(self.char.x+self.char.w+30, self.char.y-20, (30,30)))
+                    if temp2 <= 3:
+                        self.otherMovableObjects.append(Health(self.char.x-60, self.char.y+15, (30,30)))
+                        self.otherMovableObjects.append(Health(self.char.x+self.char.w+30, self.char.y+15, (30,30)))
+                        print temp2
                 self.incrementScore()
                 if isinstance(obj, Boss):
                     self.bossNumber -= 1
