@@ -3,7 +3,7 @@ First ever game, from back in grade 11. I might add a few things to it but mainl
 put this up just so others can enjoy it if they like, and so I know where it is.
 
 #### NEW - Vertical Motion
-Use this branch if you would like to try out the new vertical motion, in which when
+Use `newVerticalMotion` branch if you would like to try out the new vertical motion, in which when
 the character jumps, he moves, not the surrounding level. The level then centers itself around
 the character when he lands. And the level will be the one to move around the character if the
 character gets too high or low, so as to keep the character from falling off the screen.

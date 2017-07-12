@@ -100,8 +100,8 @@ class Boss(Enemy):
 
     def drawHealth(self, surface):
         if self.hasBeenVisible:
-            pygame.draw.rect(surface,BLACK,(self.healthBarX,HEIGHT/5, 130, 20),2)
-            pygame.draw.rect(surface,BLACK,(self.healthBarX,HEIGHT/5, (float(self.health)/self.maxHealth)*130, 20))
+            pygame.draw.rect(surface,BLACK,(self.healthBarX-2,HEIGHT/5-2, 134, 24),2)
+            pygame.draw.rect(surface,RED,(self.healthBarX,HEIGHT/5, (float(self.health)/self.maxHealth)*131, 21))
             pygame.draw.rect(surface,RED,(self.healthPicX-5,(HEIGHT/5-(0.5*(int(self.h*0.6)-20)))-5, (self.healthBarX-self.healthPicX+140),int(self.h*0.6)+10),2)
             surface.blit(self.healthPic,(self.healthPicX, (HEIGHT/5-(0.5*(int(self.h*0.6)-20)))))
 
