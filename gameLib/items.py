@@ -12,9 +12,16 @@ import pygame
 class GeneralItem(MovableObject):
     """ The general item class structure """
     def __init__(self, imagePath, x, y, sizeTuple=0):
-        MovableObject.__init__(self, imagePath, x, y)
+        #MovableObject.__init__(self, imagePath, x, y)
+        self.image = pygame.image.load(imagePath).convert_alpha()
         if sizeTuple != 0:
             self.image = pygame.transform.scale(self.image, sizeTuple)
+        self.w = self.image.get_width()
+        self.h = self.image.get_height()
+        self.x = x
+        self.y = y
+        self.visible = False
+        self.centerSpeed = 5
 
 class GravityBoost(GeneralItem):
     """ Gravity booster object """

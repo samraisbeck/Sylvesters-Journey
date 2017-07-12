@@ -37,7 +37,7 @@ class MovableObject(object):
             surface.blit(self.image, (self.x, self.y))
 
     def centerChar(self, characterObj):
-        if not ((characterObj.y+characterObj.h <= (HEIGHT/6)*5 and characterObj.speedY > 0) or\
+        if not ((characterObj.y+characterObj.h <= (HEIGHT/6)*5 and characterObj.speedY >= 0) or\
             (characterObj.y >= HEIGHT/6 and characterObj.speedY < 0)):
             self.y -= characterObj.speedY
         if not characterObj.centered and characterObj.y - HEIGHT/2 > 0:
