@@ -114,9 +114,7 @@ class Game(object):
         else:
             self.char.score = self.char.prevLvlScore
         self.pickedUpBlocks = []
-        self.char.health = self.char.maxHealth
-        self.char.x = WIDTH/2
-        self.char.y = HEIGHT/2
+        self.char.reset()
         self.platforms = []
         self.bossKilled = False
         self.bossNumber = 0
@@ -337,7 +335,7 @@ class Game(object):
                       self.renderText("Score: ", COOL_FONT, (WIDTH/20, HEIGHT/10), BLACK, 25),
                       self.renderText("Lives: ", COOL_FONT, (WIDTH/4*2.9, HEIGHT/20), BLACK, 25),
                       self.renderText("Spare Platforms: ", COOL_FONT, (WIDTH/10*7.95, HEIGHT/10), BLACK, 25),
-                      self.renderText("1. Gravity Boosts: ", COOL_FONT, (WIDTH/20*8, HEIGHT/30), BLACK, 20),
+                      self.renderText("1. Anti-gravities: ", COOL_FONT, (WIDTH/20*8, HEIGHT/30), BLACK, 20),
                       self.renderText("2. Invincibilities: ", COOL_FONT, (WIDTH/20*8.1, HEIGHT/8/2), BLACK, 20),
                       self.renderText("3. Swords: ", COOL_FONT, (WIDTH/20*8.6, HEIGHT/8/3*2.2), BLACK, 20)]
 # This is a list of texts that need to be "re-rendered" with certain events, like grabbing a block
@@ -350,7 +348,7 @@ class Game(object):
         self.textGenerated = True
 
     def centerWindow(self, obj):
-        obj.centerChar(self.char)
+        obj.centerLevel(self.char)
 
     def redrawGameWindow(self):
         """ Redraw the main game window """
@@ -365,7 +363,6 @@ class Game(object):
                     platform.y -= 200
                     self.wallsMoved = True
             platform.update(self.gameWindow, self.char)
-        self.char.centerChar()
         for obj in self.otherMovableObjects:
             # Only be able to use superjump when boss is killed
             if isinstance(obj, Superjump) and self.bossKilled:
@@ -379,6 +376,7 @@ class Game(object):
         self.drawTimers()
         if self.char.sword.visible:
             self.char.sword.update(self.gameWindow, self.char, events)
+        self.char.centerChar()
         self.char.update(self.gameWindow, events)
         for text in self.staticTexts:
             font, coords = text
@@ -465,8 +463,7 @@ class Game(object):
         gravityItem = GravityBoost(platform.x+platform.w/2-15, platform.y-50, (30, 30))
         invincibleItem = Invincibility(platform.x+platform.w/2-15, platform.y-50, (30, 30))
         swordItem = SwordIcon(platform.x+platform.w/2-5, platform.y-80, (25, 65))
-        #self.otherMovableObjects.append(choice([swordItem, gravityItem, invincibleItem]))
-        self.otherMovableObjects.append(gravityItem)
+        self.otherMovableObjects.append(choice([swordItem, gravityItem, invincibleItem]))
 
     def generateItem(self, platform):
         """ Takes platform as parameter and generates item objects
@@ -619,7 +616,7 @@ class Game(object):
         self.checkSideCollide()
 
     def characterPowers(self):
-        """ Checks for the use of superjump or gravity boost """
+        """ Checks for the use of superjump or anti-gravity """
         if self.char.gravityBoosted and self.char.onPlat and self.char.canBoostGravity:
             self.char.gravity *= 0.1
             self.char.jumpSpeed *= 0.35
@@ -632,7 +629,7 @@ class Game(object):
     def drawTimers(self):
         """ Draws the timers if needed """
         if self.char.gravityBoosted or self.char.superjump:
-            self.drawText("Gravity Boost: "+str((self.char.activatedGravity+self.char.powerTime+1000 - \
+            self.drawText("Anti-gravity: "+str((self.char.activatedGravity+self.char.powerTime+1000 - \
                                             pygame.time.get_ticks())/1000), \
                           COOL_FONT, (WIDTH/2, HEIGHT/20*3), RED, 30)
         if self.char.invincible:

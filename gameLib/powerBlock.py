@@ -34,11 +34,11 @@ class PowerBlock(MovableObject):
     def update(self, surface, characterObj):
         """ Updates the power block, including its image """
         self.checkVisible()
-        self.draw(surface)
         self.x -= characterObj.speedX
-        self.centerChar(characterObj)
+        self.centerLevel(characterObj)
         if self.hit:
             self.imageIndex = 1
+        self.draw(surface)
 
 class ItemBlock(PowerBlock):
     """ Item block object """

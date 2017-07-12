@@ -103,9 +103,6 @@ class Sword(object):
 
     def draw(self, surface, character):
         """ Draws the sword with the correct coordinates and image """
-        if (character.y+character.h <= (HEIGHT/6)*5 and character.speedY > 0) or\
-            (character.y >= HEIGHT/6 and character.speedY < 0):
-            self.y += character.speedY
         rotatedCoords = self.getRotated(character)
         if not self.swinging and character.direction == "left":
             self.displayImage = self.notRotatedL

@@ -35,10 +35,10 @@ class Character(object):
         self.imageIndex = 0
         self.imageCounter = 0
         # Movement/position variables
-        self.x = WIDTH/2
-        self.y = HEIGHT/2
         self.w = self.imageLeft.get_width()
         self.h = self.imageLeft.get_height()
+        self.x = WIDTH/2
+        self.y = HEIGHT/2
         self.centered = True
         self.speed = speed
         self.speedX = speedX
@@ -166,20 +166,43 @@ class Character(object):
     def centerChar(self):
         if not self.centered and self.y - HEIGHT/2 > 0:
             self.y -= 5
+            if self.sword.visible:
+                self.sword.y -= 5
         elif not self.centered:
             self.y += 5
+            if self.sword.visible:
+                self.sword.y += 5
 
     def update(self, surface, events):
         """ Character update to be used in the main game """
+        print self.speedY
         if (self.y+self.h <= (HEIGHT/6)*5 and self.speedY > 0) or\
             (self.y >= HEIGHT/6 and self.speedY < 0):
             self.y += self.speedY
-        if abs(self.y - HEIGHT/2) > 6 and self.onPlat:
+            if self.sword.visible:
+                self.sword.y += self.speedY
+        if (abs(self.y - HEIGHT/2) > (HEIGHT/4)*0.85 or abs(self.y+self.h - HEIGHT/2) > (HEIGHT/4)*0.85)\
+               and self.onPlat:
             self.centered = False
-        else:
+        # Give it some breathing room with the 6
+        elif abs(self.y - HEIGHT/2) < 6:
             self.centered = True
         self.draw(surface)
         self.move(events)
+
+    def reset(self):
+        self.x = WIDTH/2
+        self.y = HEIGHT/2
+        self.speedX = 0
+        self.speedY = 0
+        self.onPlat = False
+        self.canJump = True
+        self.canGroundPound = False
+        self.canMoveRight = True
+        self.canMoveLeft = True
+        self.direction = "left"
+        self.centered = True
+        self.health = self.maxHealth
 
     def stopFalling(self):
         """ Changes booleans to indicate player is on platform """

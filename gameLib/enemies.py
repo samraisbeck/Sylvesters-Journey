@@ -67,12 +67,13 @@ class Enemy(MovableObject):
         elif self.inRange and abs(characterObj.x - self.x) > 0.35*WIDTH:
             self.inRange = False
         self.checkVisible()
-        self.draw(surface)
         self.drawHealth(surface)
         # Subtract the character's speed and add the enemy's own speed
         self.x -= characterObj.speedX
         self.x += self.speed
-        self.centerChar(characterObj)
+        self.centerLevel(characterObj)
+        self.draw(surface)
+
 
 class Boss(Enemy):
     """ Subclass of enemy, suited only for the boss """
@@ -122,8 +123,8 @@ class Boss(Enemy):
         self.checkVisible()
         self.randomSpeed()
         self.runFromSword(characterObj)
-        self.draw(surface)
+        self.centerLevel(characterObj)
         self.drawHealth(surface)
         self.x -= characterObj.speedX
         self.x += self.speed
-        self.centerChar(characterObj)
+        self.draw(surface)
