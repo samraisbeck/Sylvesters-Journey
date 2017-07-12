@@ -12,7 +12,7 @@ class PowerBlock(MovableObject):
     """ Power blocks object """
     def __init__(self, x, y, sizeTuple = 0):
         self.imageNotHit = pygame.image.load(IMG_PATH_POWERBLOCK)
-        self.imageHit = pygame.image.load(IMG_PATH_POWERBLOCK_HIT) 
+        self.imageHit = pygame.image.load(IMG_PATH_POWERBLOCK_HIT)
         if sizeTuple != 0:
             self.imageNotHit = pygame.transform.scale(self.imageNotHit, sizeTuple)
             self.imageHit = pygame.transform.scale(self.imageHit, sizeTuple)
@@ -24,6 +24,7 @@ class PowerBlock(MovableObject):
         self.h = self.imageNotHit.get_height()
         self.hit = False
         self.visible = False
+        self.centerSpeed = 5
 
     def draw(self, surface):
         """ Draws the correct image """
@@ -35,7 +36,7 @@ class PowerBlock(MovableObject):
         self.checkVisible()
         self.draw(surface)
         self.x -= characterObj.speedX
-        self.y -= characterObj.speedY
+        self.centerChar(characterObj)
         if self.hit:
             self.imageIndex = 1
 
@@ -45,7 +46,7 @@ class ItemBlock(PowerBlock):
         """ Basically the same as powerBlock, but the images are different
             which changes a lot of things in the __init__() """
         self.imageNotHit = pygame.image.load(IMG_PATH_ITEMBLOCK)
-        self.imageHit = pygame.image.load(IMG_PATH_ITEMBLOCK_HIT) 
+        self.imageHit = pygame.image.load(IMG_PATH_ITEMBLOCK_HIT)
         if sizeTuple != 0:
             self.imageNotHit = pygame.transform.scale(self.imageNotHit, sizeTuple)
             self.imageHit = pygame.transform.scale(self.imageHit, sizeTuple)
@@ -57,6 +58,4 @@ class ItemBlock(PowerBlock):
         self.h = self.imageNotHit.get_height()
         self.hit = False
         self.visible = False
-    
-        
-            
+        self.centerSpeed = 5

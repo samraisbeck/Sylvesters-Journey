@@ -12,14 +12,9 @@ import pygame
 class GeneralItem(MovableObject):
     """ The general item class structure """
     def __init__(self, imagePath, x, y, sizeTuple=0):
-        self.image = pygame.image.load(imagePath).convert_alpha()
+        MovableObject.__init__(self, imagePath, x, y)
         if sizeTuple != 0:
             self.image = pygame.transform.scale(self.image, sizeTuple)
-        self.w = self.image.get_width()
-        self.h = self.image.get_height()
-        self.x = x
-        self.y = y
-        self.visible = False
 
 class GravityBoost(GeneralItem):
     """ Gravity booster object """
@@ -63,6 +58,3 @@ class SwordIcon(GeneralItem):
     def __init__(self, x, y, sizeTuple = 0):
         self.image = IMG_PATH_SWORD
         GeneralItem.__init__(self, self.image, x, y, sizeTuple)
-
-
-        

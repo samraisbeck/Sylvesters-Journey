@@ -14,5 +14,3 @@ class Arrow(MovableObject):
         MovableObject.__init__(self, IMG_PATH_ARROW, x, y)
         if angle != 0:
             self.image = pygame.transform.rotate(self.image, angle).convert_alpha()
-        
-        

@@ -39,6 +39,7 @@ class Character(object):
         self.y = HEIGHT/2
         self.w = self.imageLeft.get_width()
         self.h = self.imageLeft.get_height()
+        self.centered = True
         self.speed = speed
         self.speedX = speedX
         self.speedY = speedY
@@ -162,8 +163,21 @@ class Character(object):
         if self.invincible:
             surface.blit(self.invinBubble, (self.x-self.w/3, self.y-self.h/3))
 
+    def centerChar(self):
+        if not self.centered and self.y - HEIGHT/2 > 0:
+            self.y -= 5
+        elif not self.centered:
+            self.y += 5
+
     def update(self, surface, events):
         """ Character update to be used in the main game """
+        if (self.y+self.h <= (HEIGHT/6)*5 and self.speedY > 0) or\
+            (self.y >= HEIGHT/6 and self.speedY < 0):
+            self.y += self.speedY
+        if abs(self.y - HEIGHT/2) > 6 and self.onPlat:
+            self.centered = False
+        else:
+            self.centered = True
         self.draw(surface)
         self.move(events)
 

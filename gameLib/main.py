@@ -115,6 +115,8 @@ class Game(object):
             self.char.score = self.char.prevLvlScore
         self.pickedUpBlocks = []
         self.char.health = self.char.maxHealth
+        self.char.x = WIDTH/2
+        self.char.y = HEIGHT/2
         self.platforms = []
         self.bossKilled = False
         self.bossNumber = 0
@@ -347,6 +349,9 @@ class Game(object):
                               self.renderText(str(self.char.swordCount), COOL_FONT, (WIDTH/20*9.8, HEIGHT/8/3*2.2), BLACK, 20)]
         self.textGenerated = True
 
+    def centerWindow(self, obj):
+        obj.centerChar(self.char)
+
     def redrawGameWindow(self):
         """ Redraw the main game window """
         self.gameWindow.blit(self.backgroundImage, ORIGIN)
@@ -360,13 +365,16 @@ class Game(object):
                     platform.y -= 200
                     self.wallsMoved = True
             platform.update(self.gameWindow, self.char)
+        self.char.centerChar()
         for obj in self.otherMovableObjects:
             # Only be able to use superjump when boss is killed
             if isinstance(obj, Superjump) and self.bossKilled:
                 obj.canBeUsed = True
             if isinstance(obj, Enemy) or isinstance(obj, Boss):
                 obj.updateSpeed(self.platforms)
+
             obj.update(self.gameWindow, self.char)
+
         self.gameWindow.blit(self.HUD, ORIGIN)
         self.drawTimers()
         if self.char.sword.visible:
@@ -457,7 +465,8 @@ class Game(object):
         gravityItem = GravityBoost(platform.x+platform.w/2-15, platform.y-50, (30, 30))
         invincibleItem = Invincibility(platform.x+platform.w/2-15, platform.y-50, (30, 30))
         swordItem = SwordIcon(platform.x+platform.w/2-5, platform.y-80, (25, 65))
-        self.otherMovableObjects.append(choice([swordItem, gravityItem, invincibleItem]))
+        #self.otherMovableObjects.append(choice([swordItem, gravityItem, invincibleItem]))
+        self.otherMovableObjects.append(gravityItem)
 
     def generateItem(self, platform):
         """ Takes platform as parameter and generates item objects
@@ -495,7 +504,7 @@ class Game(object):
             elif self.char.getRect().colliderect(platform.getRect()) and \
                self.char.getRect().bottom < platform.y+25 and \
                self.char.x < platform.x+platform.w-7 and self.char.x+self.char.w-7 \
-               > platform.x:
+               > platform.x and self.char.speedY >= 0:
                 # Makes sure the character is always right on the platform (no overlaps)
                 overlap = self.char.y+self.char.h-1 > platform.y
                 if overlap:

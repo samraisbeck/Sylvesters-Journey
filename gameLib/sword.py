@@ -100,9 +100,12 @@ class Sword(object):
                              (rotatedCoords.centerx-10, rotatedCoords.centery+20), 4)
             pygame.draw.line(surface, BLACK, (character.getRect().centerx+10, character.getRect().centery),
                              (rotatedCoords.centerx-10, rotatedCoords.centery+10), 4)
-            
+
     def draw(self, surface, character):
         """ Draws the sword with the correct coordinates and image """
+        if (character.y+character.h <= (HEIGHT/6)*5 and character.speedY > 0) or\
+            (character.y >= HEIGHT/6 and character.speedY < 0):
+            self.y += character.speedY
         rotatedCoords = self.getRotated(character)
         if not self.swinging and character.direction == "left":
             self.displayImage = self.notRotatedL
@@ -125,6 +128,3 @@ class Sword(object):
         """ Sword update method to be used in the main game class """
         self.checkSwing(events)
         self.draw(surface, character)
-    
-        
-        

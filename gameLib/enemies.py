@@ -44,7 +44,7 @@ class Enemy(MovableObject):
             for platform in platforms:
                 if self.getRect().colliderect(platform.getRect()):
                     self.platIndex = platforms.index(platform)
-            self.platFound = True
+            self.platFound = True ##LOOK AT THIS LATER, MAYBE SHOULD BE IN THE IF STATEMENT
         if self.x+self.w >= platforms[self.platIndex].getRect().right-self.bounds and \
            self.direction == "right" or self.x <= platforms[self.platIndex].x+self.bounds and \
            self.direction == "left":
@@ -72,7 +72,7 @@ class Enemy(MovableObject):
         # Subtract the character's speed and add the enemy's own speed
         self.x -= characterObj.speedX
         self.x += self.speed
-        self.y -= characterObj.speedY
+        self.centerChar(characterObj)
 
 class Boss(Enemy):
     """ Subclass of enemy, suited only for the boss """
@@ -126,4 +126,4 @@ class Boss(Enemy):
         self.drawHealth(surface)
         self.x -= characterObj.speedX
         self.x += self.speed
-        self.y -= characterObj.speedY
+        self.centerChar(characterObj)

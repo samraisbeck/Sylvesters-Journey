@@ -16,6 +16,7 @@ class MovableObject(object):
         self.y = y
         self.w = self.image.get_width()
         self.h = self.image.get_height()
+        self.centerSpeed = 5
         self.visible = False
 
     def checkVisible(self):
@@ -35,9 +36,19 @@ class MovableObject(object):
         if self.visible:
             surface.blit(self.image, (self.x, self.y))
 
+    def centerChar(self, characterObj):
+        if not ((characterObj.y+characterObj.h <= (HEIGHT/6)*5 and characterObj.speedY > 0) or\
+            (characterObj.y >= HEIGHT/6 and characterObj.speedY < 0)):
+            self.y -= characterObj.speedY
+        if not characterObj.centered and characterObj.y - HEIGHT/2 > 0:
+            self.y -= self.centerSpeed
+        elif not characterObj.centered:
+            self.y += self.centerSpeed
+
+
     def update(self, surface, characterObj):
         """ Movable objects update method to be used in the game class """
         self.checkVisible()
         self.draw(surface)
         self.x -= characterObj.speedX
-        self.y -= characterObj.speedY
+        self.centerChar(characterObj)
