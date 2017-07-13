@@ -176,7 +176,6 @@ class Character(object):
 
     def update(self, surface, events):
         """ Character update to be used in the main game """
-        print self.speedY
         if (self.y+self.h <= (HEIGHT/6)*5 and self.speedY > 0) or\
             (self.y >= HEIGHT/6 and self.speedY < 0):
             self.y += self.speedY

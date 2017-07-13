@@ -602,7 +602,6 @@ class Game(object):
                     if temp2 <= 3:
                         self.otherMovableObjects.append(Health(self.char.x-60, self.char.y+15, (30,30)))
                         self.otherMovableObjects.append(Health(self.char.x+self.char.w+30, self.char.y+15, (30,30)))
-                        print temp2
                 self.incrementScore()
                 if isinstance(obj, Boss):
                     self.bossNumber -= 1
