@@ -164,6 +164,7 @@ class Character(object):
             surface.blit(self.invinBubble, (self.x-self.w/3, self.y-self.h/3))
 
     def centerChar(self):
+        # Handling the sword movement here is just convenient.
         if not self.centered and self.y - HEIGHT/2 > 0:
             self.y -= 5
             if self.sword.visible:

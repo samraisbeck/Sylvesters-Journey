@@ -750,6 +750,7 @@ class Game(object):
             sys.exit(0)
 
 # You can start the game from this file as well as runGame.py.
-g = Game()
-while True:
-    g.execute()
+if __name__ == '__main__':
+    g = Game()
+    while True:
+        g.execute()
