@@ -398,6 +398,7 @@ class Game(object):
             # Win screen sequence (the part after the 'or' above is a cheat code. Shhh...)
             if self.level == 8:
                 pygame.time.delay(1000)
+                self.updateHighScore()
                 while True:
                     self.gameWindow.blit(self.winPic, ORIGIN)
                     self.drawText("Your final score: "+str(self.char.score), COOL_FONT, (WIDTH/2, HEIGHT/10*6.4), GREEN, 40)
@@ -697,10 +698,37 @@ class Game(object):
             pygame.display.update()
             pygame.time.delay(2000)
 
+    def updateHighScore(self):
+        fr = open(getFilepath('leaderboard.txt'), 'r')
+        scores = []
+        endings = ['st', 'nd', 'rd', 'th', 'th']
+        insertedCurrentScore = False
+        for line in fr:
+            for score in line.split():
+                if self.char.score > int(score) and not insertedCurrentScore:
+                    scores.append(str(self.char.score))
+                    place = len(scores)
+                    if place < 6:
+                        print 'Congrats! You placed '+str(place)+endings[place-1]+'!'
+                    insertedCurrentScore = True
+                scores.append(score)
+        # If char score hasn't been added yet, it means either the file was empty,
+        # or it's last place. So add it to the list now.
+        if not insertedCurrentScore:
+            scores.append(str(self.char.score))
+            if len(scores) == 1:
+                print 'Congrats! You placed 1st!'
+        fr.close()
+        fw = open(getFilepath('leaderboard.txt'), 'w')
+        for score in scores:
+            fw.write(str(score)+'\n')
+        fw.close()
+
     def gameOver(self):
         """ Game over screen """
         pygame.mixer.music.load(getFilepath("gameOver.mp3"))
         pygame.mixer.music.play(-1)
+        self.updateHighScore()
         while True:
             self.gameWindow.fill(BLACK)
             self.drawText("Game over!", COOL_FONT, (WIDTH/2, HEIGHT/4), RED, 70)

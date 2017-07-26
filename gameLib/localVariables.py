@@ -10,10 +10,10 @@ import pygame, os
 def getFilepath(filename):
     """ Takes the filename and based on the last 3 characters,
         it decides what folder to look in for it """
-    rootPath = os.path.dirname(os.path.dirname(__file__))
-    if filename[-3:] == "png" or filename[-3:] == "jpg":  
+    rootPath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    if filename[-3:] == "png" or filename[-3:] == "jpg":
         return rootPath+"\\data\\pictures\\"+filename
-    elif filename[-3:] == "txt":
+    elif filename[-8:-5] == "lvl":
         return rootPath+"\\data\\levels\\"+filename
     elif filename[-3:] == "mp3" or filename[-3:] == "wav":
         return rootPath+"\\data\\music and sounds\\"+filename
