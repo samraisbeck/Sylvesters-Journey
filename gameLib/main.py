@@ -395,30 +395,8 @@ class Game(object):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP] and self.char.inDoorway or keys[pygame.K_LSHIFT] and keys[pygame.K_s] \
            and keys[pygame.K_a] and keys[pygame.K_m]:
-            # Win screen sequence (the part after the 'or' above is a cheat code. Shhh...)
-            if self.level == 8:
-                pygame.time.delay(1000)
-                self.updateHighScore()
-                while True:
-                    self.gameWindow.blit(self.winPic, ORIGIN)
-                    self.drawText("Your final score: "+str(self.char.score), COOL_FONT, (WIDTH/2, HEIGHT/10*6.4), GREEN, 40)
-                    events = pygame.event.get()
-                    keys = pygame.key.get_pressed()
-                    self.constantEventChecks(keys)
-                    if keys[pygame.K_RETURN]:
-                        self.creditScreen()
-                    pygame.display.update()
-            else:
-                pygame.time.delay(500)
-                self.level += 1
-                self.char.levelCleared = True
-                self.gameWindow.blit(self.transitionPic, ORIGIN)
-                self.drawText("Level "+str(self.level), COOL_FONT, (WIDTH/2, HEIGHT/2), GREEN, 70)
-                self.drawText(str(self.levelNames[self.level-1]), COOL_FONT, (WIDTH/2, HEIGHT/5*3), GREEN, 35)
-                self.musicSelected = False
-                pygame.mixer.music.fadeout(2000)
-                pygame.display.update()
-                pygame.time.delay(2000)
+            # (the part after the 'or' above is a cheat code. Shhh...)
+            self.updateLevel()
         elif keys[pygame.K_1] and not self.char.gravityBoosted and \
              not self.char.superjump and self.char.gravityCount > 0:
             self.char.gravityBoosted = True
@@ -698,6 +676,25 @@ class Game(object):
             pygame.display.update()
             pygame.time.delay(2000)
 
+    def updateLevel(self):
+        # add character health to score at end of each level
+        # (rewarded for getting through a level unscathed)
+        self.char.score += self.char.health
+        if self.level == 8:
+            pygame.time.delay(1000)
+            self.winGameScreen()
+        else:
+            pygame.time.delay(500)
+            self.level += 1
+            self.char.levelCleared = True
+            self.gameWindow.blit(self.transitionPic, ORIGIN)
+            self.drawText("Level "+str(self.level), COOL_FONT, (WIDTH/2, HEIGHT/2), GREEN, 70)
+            self.drawText(str(self.levelNames[self.level-1]), COOL_FONT, (WIDTH/2, HEIGHT/5*3), GREEN, 35)
+            self.musicSelected = False
+            pygame.mixer.music.fadeout(2000)
+            pygame.display.update()
+            pygame.time.delay(2000)
+
     def updateHighScore(self):
         fr = open(getFilepath('leaderboard.txt'), 'r')
         scores = []
@@ -734,6 +731,18 @@ class Game(object):
             self.drawText("Game over!", COOL_FONT, (WIDTH/2, HEIGHT/4), RED, 70)
             self.drawText("Your final score: "+str(self.char.score), COOL_FONT, (WIDTH/2, HEIGHT/4*2), WHITE, 40)
             self.drawText("Hit enter to see the credits. Thanks for playing!", COOL_FONT, (WIDTH/2, HEIGHT/4*3), WHITE, 40)
+            events = pygame.event.get()
+            keys = pygame.key.get_pressed()
+            self.constantEventChecks(keys)
+            if keys[pygame.K_RETURN]:
+                self.creditScreen()
+            pygame.display.update()
+
+    def winGameScreen(self):
+        self.updateHighScore()
+        while True:
+            self.gameWindow.blit(self.winPic, ORIGIN)
+            self.drawText("Your final score: "+str(self.char.score), COOL_FONT, (WIDTH/2, HEIGHT/10*6.4), GREEN, 40)
             events = pygame.event.get()
             keys = pygame.key.get_pressed()
             self.constantEventChecks(keys)
